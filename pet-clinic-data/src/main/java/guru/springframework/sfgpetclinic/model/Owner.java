@@ -1,6 +1,6 @@
 package guru.springframework.sfgpetclinic.model;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,17 +11,22 @@ import java.util.Set;
 
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "owners")
 public class Owner extends Person {
 
-    public Owner(String firstName, String lastName, String address, String city, String telephone) {
-        super(firstName, lastName);
+    @Builder
+    public Owner(Long id, String firstName, String lastName, String address, String city, String telephone,
+                 Set<Pet> pets) {
+        super(id, firstName, lastName);
         this.address = address;
         this.city = city;
         this.telephone = telephone;
+
+        if(pets != null) {
+            this.pets = pets;
+        }
     }
 
     @Column(name = "address")
